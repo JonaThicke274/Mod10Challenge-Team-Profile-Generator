@@ -7,10 +7,14 @@ const Intern = require("./lib/Intern.js");
 const fs = require("fs");
 const inquirer = require("inquirer");
 
+// Array for team members
+const teamArray = [];
+
 // Manager Prompts
 const promptManager = function() {
-    console.log("Prompts for team manager info:")
-    inquirer.prompt([
+    console.log("Prompts for team manager info:");
+    
+    return inquirer.prompt([
         {
             type: "input",
             name: "name",
@@ -81,6 +85,7 @@ const promptManager = function() {
         const { name, id, email, officeNumber } = managerInfo;
         const manager = new Manager (name, id, email, officeNumber);
 
+        teamArray.push(manager);
         console.log(manager);
     })
 };
@@ -89,7 +94,7 @@ const promptManager = function() {
 const promptEmployee = function() {
     console.log("Prompts for employee info:")
 
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "list",
             name: "role",
@@ -186,22 +191,30 @@ const promptEmployee = function() {
         if (role === "Engineer") {
             employee = new Engineer (name, id, email, github);
 
+            teamArray.push(employee)
             console.log(employee);
         }
         else if (role === "Intern") {
-            employee = new Intern (name, id, email, school);
+            intern = new Intern (name, id, email, school);
 
-            console.log(employee);
+            teamArray.push(intern)
+            console.log(intern);
         }
 
         if (confirmAddEmployee) {
             return promptEmployee();
         }
         else {
-            return;
+            return teamArray;
         }
     })
 };
 
-// promptManager();
-promptEmployee();
+promptManager()
+    .then(promptEmployee) 
+    .then(function(teamArray) {
+        console.log(teamArray);
+    })
+    .catch(function(err) {
+        console.log(err);
+    });
