@@ -192,13 +192,13 @@ const promptEmployee = function() {
         if (role === "Engineer") {
             employee = new Engineer (name, id, email, github);
 
-            teamArray.push(employee)
+            teamArray.push(employee);
             console.log(employee);
         }
         else if (role === "Intern") {
             intern = new Intern (name, id, email, school);
 
-            teamArray.push(intern)
+            teamArray.push(intern);
             console.log(intern);
         }
 
@@ -228,17 +228,23 @@ const writeToFile = (fileContent) => {
     });
 };
 
-promptManager()
-    .then(promptEmployee)
-    .then(function(teamArray) {
-        return genHTML(teamArray);
-    }) 
-    .then(function(pageHtml) {
-        return writeToFile("test");
-    })
-    .then(function(writeFileResponse) {
-        console.log(writeFileResponse.message);
-    })
-    .catch(function(err) {
-        console.log("Error generating index.html. File was not created.")
-    });
+// Function for prompting user and generating file content and writing the html file
+function init() {
+    promptManager()
+        .then(promptEmployee)
+        .then(function(teamArray) {
+            return genHTML(teamArray);
+        })
+        .then(function(pageHtml) {
+            return writeToFile(pageHtml);
+        })
+        .then(function(writeFileResponse) {
+            console.log(writeFileResponse.message);
+        })
+        .catch(function(err) {
+            console.log("Error generating index.html. File was not created.")
+        });
+};
+
+// Initializes App
+init();
