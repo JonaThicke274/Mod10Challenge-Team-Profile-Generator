@@ -3,9 +3,10 @@ const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
 
-// Node modules
+// Packages for application: Inquirer, File System, and generateHTML.js
 const fs = require("fs");
 const inquirer = require("inquirer");
+const genHTML = require("./src/generateHTML.js");
 
 // Array for team members
 const teamArray = [];
@@ -210,11 +211,34 @@ const promptEmployee = function() {
     })
 };
 
+// Function for generating index.html in the dist folder
+const writeToFile = (fileContent) => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile("./dist/index.html", fileContent, err => {
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            resolve ({
+                ok: true,
+                message: "Team profile index.html has been generated. Please see the dist folder."
+            })
+        });
+    });
+};
+
 promptManager()
-    .then(promptEmployee) 
+    .then(promptEmployee)
     .then(function(teamArray) {
-        console.log(teamArray);
+        return genHTML(teamArray);
+    }) 
+    .then(function(pageHtml) {
+        return writeToFile("test");
+    })
+    .then(function(writeFileResponse) {
+        console.log(writeFileResponse.message);
     })
     .catch(function(err) {
-        console.log(err);
+        console.log("Error generating index.html. File was not created.")
     });
