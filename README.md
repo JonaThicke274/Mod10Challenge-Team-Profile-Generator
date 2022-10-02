@@ -18,5 +18,11 @@ Generates a webpage that will display a user's team and their basic/relevant inf
 
 ## Demonstration
 
+View a [demonstration video](https://youtu.be/d98yBtlBWgo) of how to use the application!
+
+![image](https://user-images.githubusercontent.com/109185830/193432552-9de15882-0d53-48e8-8e03-ea9a3f004a3b.png)
+![image](https://user-images.githubusercontent.com/109185830/193432567-c1327296-a4b5-4cef-bc6d-fa83ca9560cb.png)
+
+
 ## Contributions/Credits
 Made by Jonathan Lipata Arevalo
